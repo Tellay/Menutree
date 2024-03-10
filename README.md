@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+	<h1 align="center"><b>Menutree</b></h1>
+	<p align="center">
+		Your restaurant in one Link. Less papers, just a QRCode away.
+    <br />
+    <a href=""><strong>coming soon »</strong></a>
+  </p>
+</p>
 
-## Getting Started
+Menutree is an online platform for restaurants to create their digital menus and serve them as a QRCode as a way to save papers and make Earth more sustainable.
+<br/>
+<br/>
 
-First, run the development server:
+> UPDATE: Menutree is under active development.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Motivation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The main motivation behind Menutree is to save the Earth. We are using a lot of papers to print the menu cards and those are being thrown away after a single use. This is not sustainable and has a huge impact on the environment.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Create your own digital menu
+- Add categories and items to the menu
+- Add images to the items
+- Generate a QRCode for the menu
+- Print the QRCode and place it on the tables
+- Customers can scan the QRCode and view the menu on their mobile phones
 
-## Learn More
+# Security Policy
 
-To learn more about Next.js, take a look at the following resources:
+At Menutree, we take security very seriously. If you discover a security issue, please bring it to our attention right away!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Menutree is open-source licensed under the [Apache License 2.0](https://github.com/tellay/menutree-web/blob/main/LICENSE)
