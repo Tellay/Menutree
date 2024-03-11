@@ -87,7 +87,7 @@ export function NewRestaurantDialog() {
                   <FormItem>
                     <FormLabel>Username</FormLabel>
                     <FormControl>
-                      <Input placeholder="shadcn" {...field} />
+                      <Input placeholder="Spaghetti House" {...field} />
                     </FormControl>
                     <FormDescription>
                       This is your public display name.
@@ -104,7 +104,10 @@ export function NewRestaurantDialog() {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Input placeholder="shadcn" {...field} />
+                      <Input
+                        placeholder="A very lovely restaurant with a great team."
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
                       This is your public display description.
