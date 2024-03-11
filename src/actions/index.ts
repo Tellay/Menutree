@@ -12,6 +12,18 @@ export async function newRestaurant(data: NewRestaurantFormSchemaType) {
     const session = await auth();
     if (!session?.user?.id) throw new Error("User not found");
 
+    const totalRestaurants = await db.restaurant.count({
+      where: {
+        createdBy: {
+          id: session.user.id,
+        },
+      },
+    });
+
+    if (totalRestaurants + 1 > 10) {
+      throw new Error("You can only have up to 10 restaurants");
+    }
+
     await db.restaurant.create({
       data: {
         name: data.name,

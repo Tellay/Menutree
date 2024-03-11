@@ -1,21 +1,30 @@
+import { redirect } from "next/navigation";
 import Link from "next/link";
+
+import { auth } from "@/server/auth";
 
 import { AuthProviders } from "./_components/auth-buttons";
 
 export default async function AuthPage() {
+  const session = await auth();
+
+  if (session) return redirect("/");
+
   return (
     <div className="flex h-screen flex-col">
       <div className="grid h-full lg:grid-cols-2">
-        <div className="hidden h-full items-end bg-primary p-10 lg:flex">
-          <blockquote className="space-y-2 text-primary-foreground">
-            <p className="text-lg">
-              &ldquo;This company helps a lot to make my restaurant grow.
-              Without it, it would take many more years, and it would be almost
-              an impossible mission. I am eternally grateful to Menutree and
-              it's team.&rdquo;
-            </p>
-            <footer className="text-sm">Sofia Davis</footer>
-          </blockquote>
+        <div className="p-6">
+          <div className="hidden h-full items-end rounded-lg bg-primary p-10 lg:flex">
+            <blockquote className="space-y-2 text-primary-foreground">
+              <p className="text-lg">
+                &ldquo;This company helps a lot to make my restaurant grow.
+                Without it, it would take many more years, and it would be
+                almost an impossible mission. I am eternally grateful to
+                Menutree and it's team.&rdquo;
+              </p>
+              <footer className="text-sm">Sofia Davis</footer>
+            </blockquote>
+          </div>
         </div>
 
         <div className="mx-auto flex items-center px-4">

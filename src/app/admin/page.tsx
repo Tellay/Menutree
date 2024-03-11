@@ -12,7 +12,7 @@ import {
   BentoGridCardDescription,
   BentoGridCardTitle,
 } from "@/components/ui/bento-grid";
-import { Button } from "@/components/ui/button";
+import { Sidebar } from "./_components/sidebar";
 
 export default async function AdminPage() {
   const session = await auth();
@@ -25,36 +25,9 @@ export default async function AdminPage() {
   });
 
   return (
-    <div>
-      <div className="container">
-        <div className="py-10">
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h1 className="text-lg font-semibold">Your restaurants</h1>
-              <NewRestaurantDialog />
-            </div>
-
-            <BentoGrid className="lg:grid-cols-3">
-              {restaurants.map((restaurant) => (
-                <BentoGridCard className="group cursor-pointer hover:shadow-none">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <BentoGridCardTitle className="text-base">
-                        {restaurant.name}
-                      </BentoGridCardTitle>
-
-                      <Edit className="hidden size-5 group-hover:block" />
-                    </div>
-
-                    <BentoGridCardDescription>
-                      {restaurant.description}
-                    </BentoGridCardDescription>
-                  </div>
-                </BentoGridCard>
-              ))}
-            </BentoGrid>
-          </div>
-        </div>
+    <div className="flex h-screen flex-col">
+      <div className="grid h-full grid-cols-[378px_auto]">
+        <Sidebar restaurants={restaurants} />
       </div>
     </div>
   );

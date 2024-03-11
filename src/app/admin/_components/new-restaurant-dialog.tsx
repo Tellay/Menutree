@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
+import { AiOutlineLoading3Quarters as Loading } from "react-icons/ai";
+import { FaCirclePlus as PlusCircleFilled } from "react-icons/fa6";
 import { FiPlusCircle as PlusCircle } from "react-icons/fi";
 
 import { newRestaurant } from "@/actions";
@@ -12,8 +14,8 @@ import { newRestaurant } from "@/actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -30,8 +32,11 @@ import {
 import { Input } from "@/components/ui/input";
 
 export const formSchema = z.object({
-  name: z.string(),
-  description: z.string(),
+  name: z.string().min(1, "Name is required!").max(50, "Name is too long!"),
+  description: z
+    .string()
+    .min(1, "Description is required!")
+    .max(255, "Description is too long!"),
 });
 
 export type NewRestaurantFormSchemaType = z.infer<typeof formSchema>;
@@ -62,64 +67,84 @@ export function NewRestaurantDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-3" variant="outline">
-          <PlusCircle className="size-4" />
-          New restaurant
+        <Button
+          className="text-primary-foreground hover:text-secondary/90"
+          variant="link"
+          size="icon"
+        >
+          <PlusCircleFilled className="size-5" />
+          <span className="sr-only">New restaurant</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New restaurant</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
-
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit((data) => onSubmit(data))}
-              className="space-y-8"
-            >
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Spaghetti House" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      This is your public display name.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="A very lovely restaurant with a great team."
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      This is your public display description.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Submit</Button>
-            </form>
-          </Form>
         </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit((data) => onSubmit(data))}
+            className="space-y-8"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Spaghetti House"
+                      disabled={form.formState.isSubmitting}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="A very lovely restaurant with a great team."
+                      disabled={form.formState.isSubmitting}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    This is your public display description.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="flex justify-end">
+              <div className="flex items-center gap-2">
+                <DialogClose asChild>
+                  <Button variant="outline">Close</Button>
+                </DialogClose>
+
+                <Button className="gap-3" type="submit">
+                  {!form.formState.isSubmitting ? (
+                    <PlusCircle className="size-4" />
+                  ) : (
+                    <Loading className="size-4 animate-spin" />
+                  )}
+                  Submit
+                </Button>
+              </div>
+            </div>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
