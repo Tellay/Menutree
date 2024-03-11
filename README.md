@@ -11,7 +11,7 @@ Menutree is an online platform for restaurants to create their digital menus and
 <br/>
 <br/>
 
-> UPDATE: Menutree is under active development.
+> NOTE: Menutree is under active development.
 
 # Motivation
 
@@ -32,4 +32,4 @@ At Menutree, we take security very seriously. If you discover a security issue, 
 
 # License
 
-Menutree is open-source licensed under the [Apache License 2.0](https://github.com/tellay/menutree-web/blob/main/LICENSE)
+Menutree is open-source licensed under the [Apache License 2.0](https://github.com/tellay/menutree/blob/main/LICENSE)
