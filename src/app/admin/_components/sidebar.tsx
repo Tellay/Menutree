@@ -22,7 +22,7 @@ export async function Sidebar({ restaurants }: ISidebarProps) {
           <NewRestaurantDialog />
         </div>
 
-        <div className="grid flex-grow gap-2">
+        <div className="grid flex-grow grid-rows-10 gap-2">
           {restaurants.length === 0 && (
             <p className="text-center text-sm text-primary-foreground">
               You don't have any restaurants...
@@ -32,14 +32,11 @@ export async function Sidebar({ restaurants }: ISidebarProps) {
             restaurants.map((restaurant) => (
               <Button
                 key={restaurant.id}
-                className={cn(
-                  "size-full h-full bg-secondary/10 hover:bg-secondary/5",
-                  restaurants.length === 1 && "h-[250px]",
-                )}
+                className="h-full truncate bg-secondary/10 hover:bg-secondary/5"
                 asChild
               >
                 <Link href={`/admin/restaurant/${restaurant.id}`}>
-                  {restaurant.name}
+                  {restaurant.name.slice(0, 20)}
                 </Link>
               </Button>
             ))}
