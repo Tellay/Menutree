@@ -7,6 +7,27 @@ import { db } from "@/server/db";
 
 import { NewRestaurantFormSchemaType } from "@/app/admin/_components/new-restaurant-dialog";
 
+export async function getRestraurantsCreatedByCurrentUser() {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("User not found");
+
+    const restaurants = await db.restaurant.findMany({
+      where: {
+        createdBy: {
+          id: session.user.id,
+        },
+      },
+    });
+
+    return restaurants;
+  } catch (error) {
+    console.error("Error getting restaurants", error);
+    throw error;
+  }
+
+}
+
 export async function newRestaurant(data: NewRestaurantFormSchemaType) {
   try {
     const session = await auth();
@@ -80,6 +101,9 @@ export async function editRestaurantById({
     await db.restaurant.update({
       where: {
         id,
+        createdBy: {
+          id: session.user.id,
+        }
       },
       data,
     });
@@ -87,6 +111,27 @@ export async function editRestaurantById({
     revalidatePath("/admin/restaurant/[restaurantId]", "page");
   } catch (error) {
     console.error("Error editing estaurant", error);
+    throw error;
+  }
+}
+
+export async function deleteRestaurant(id: string) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("User not found");
+
+    await db.restaurant.delete({
+      where: {
+        id,
+        createdBy: {
+          id: session.user.id,
+        },
+      }
+    });
+
+    revalidatePath("/admin", "page");
+  } catch (error) {
+    console.error("Error deleting restaurant", error);
     throw error;
   }
 }
