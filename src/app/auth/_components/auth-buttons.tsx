@@ -13,7 +13,7 @@ export function AuthProviders() {
         className="gap-3"
         variant="outline"
         size="lg"
-        onClick={async () => await signIn("google")}
+        onClick={async () => await signIn("google", { callbackUrl: "/admin" })}
       >
         <Google className="size-4" />
         Continue with Google

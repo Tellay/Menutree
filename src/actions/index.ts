@@ -6,6 +6,7 @@ import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 
 import { NewRestaurantFormSchemaType } from "@/app/admin/_components/new-restaurant-dialog";
+import { redirect } from "next/navigation";
 
 export async function newRestaurant(data: NewRestaurantFormSchemaType) {
   try {
@@ -24,7 +25,7 @@ export async function newRestaurant(data: NewRestaurantFormSchemaType) {
       throw new Error("You can only have up to 10 restaurants");
     }
 
-    await db.restaurant.create({
+    var restaurant = await db.restaurant.create({
       data: {
         name: data.name,
         description: data.description,
@@ -35,12 +36,12 @@ export async function newRestaurant(data: NewRestaurantFormSchemaType) {
         },
       },
     });
-
-    revalidatePath("/admin", "page");
   } catch (error) {
     console.error("Error adding new restaurant", error);
     throw error;
   }
+  revalidatePath("/admin", "page");
+  redirect(`/admin/restaurant/${restaurant.id}`);
 }
 
 export async function getRestaurantById(id: string) {
@@ -66,6 +67,9 @@ interface EditRestaurantByIdProps {
   data: {
     name: string;
     description: string;
+    instagramUrl?: string;
+    facebookUrl?: string;
+    tiktokUrl?: string;
   };
 }
 
@@ -89,4 +93,23 @@ export async function editRestaurantById({
     console.error("Error editing estaurant", error);
     throw error;
   }
+}
+
+export async function deleteRestaurantById(id: string) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("User not found");
+
+    await db.restaurant.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (err) {
+    console.error("Error deleting restaurant", err);
+    throw err;
+  }
+
+  revalidatePath("/admin", "page");
+  redirect("/admin");
 }

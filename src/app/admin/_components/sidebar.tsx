@@ -1,10 +1,8 @@
-import Link from "next/link";
 import { Restaurant } from "@prisma/client";
+import Link from "next/link";
 
-import { cn } from "@/lib/utils";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { NewRestaurantDialog } from "./new-restaurant-dialog";
-import { Button } from "@/components/ui/button";
 
 interface ISidebarProps {
   restaurants: Restaurant[];
@@ -12,36 +10,45 @@ interface ISidebarProps {
 
 export async function Sidebar({ restaurants }: ISidebarProps) {
   return (
-    <aside className="m-6 rounded-lg bg-primary p-6">
-      <div className="flex h-full flex-col space-y-4">
-        <div className="flex items-center justify-between">
-          <h4 className="px-2 py-1 text-sm font-semibold text-primary-foreground">
-            Restaurants
-          </h4>
-
-          <NewRestaurantDialog />
-        </div>
-
-        <div className="grid flex-grow grid-rows-10 gap-2">
+    <div className="flex h-screen flex-col">
+      <aside className="m-6 max-h-screen flex-1 overflow-hidden rounded-xl border bg-muted p-2">
+        <div className="grid h-full grid-rows-11 gap-2">
           {restaurants.length === 0 && (
-            <p className="text-center text-sm text-primary-foreground">
-              You don't have any restaurants...
-            </p>
+            <div className="flex items-center justify-center rounded-md border bg-background p-4 shadow-sm transition-shadow hover:shadow-md hover:shadow-black/5">
+              <p className="text-center text-sm text-muted-foreground">
+                You don't have any restaurants...
+              </p>
+            </div>
           )}
-          {restaurants.length !== 0 &&
-            restaurants.map((restaurant) => (
-              <Button
-                key={restaurant.id}
-                className="h-full truncate bg-secondary/10 hover:bg-secondary/5"
-                asChild
-              >
-                <Link href={`/admin/restaurant/${restaurant.id}`}>
-                  {restaurant.name.slice(0, 20)}
-                </Link>
-              </Button>
-            ))}
+          {restaurants.map((restaurant) => (
+            <Link
+              className="flex items-center rounded-md border bg-background p-4 shadow-sm transition-shadow hover:shadow-md hover:shadow-black/5"
+              href={`/admin/restaurant/${restaurant.id}`}
+              key={restaurant.id}
+            >
+              <div className="flex items-center space-x-4">
+                <Avatar className="size-7">
+                  <AvatarImage src="" alt="" />
+                  <AvatarFallback />
+                </Avatar>
+
+                <div className="flex flex-col space-y-0.5">
+                  <p className="line-clamp-1 text-sm font-medium">
+                    {restaurant.name}
+                  </p>
+                  <p className="line-clamp-1 text-sm text-muted-foreground">
+                    {restaurant.description}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          ))}
+
+          <div className="flex items-center justify-center">
+            <NewRestaurantDialog />
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </div>
   );
 }

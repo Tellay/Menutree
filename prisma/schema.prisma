@@ -62,7 +62,6 @@ model Restaurant {
   totalReviews  Int      @default(0)
   totalVisits   Int      @default(0)
   instagramUrl  String?
-  xUrl          String?
   facebookUrl   String?
   tiktokUrl     String?
   createdAt     DateTime @default(now())
