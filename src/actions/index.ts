@@ -8,6 +8,26 @@ import { db } from "@/server/db";
 import { NewRestaurantFormSchemaType } from "@/app/admin/_components/new-restaurant-dialog";
 import { redirect } from "next/navigation";
 
+export async function getRestraurantsCreatedByCurrentUser() {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("User not found");
+
+    const restaurants = await db.restaurant.findMany({
+      where: {
+        createdBy: {
+          id: session.user.id,
+        },
+      },
+    });
+
+    return restaurants;
+  } catch (error) {
+    console.error("Error getting restaurants", error);
+    throw error;
+  }
+}
+
 export async function newRestaurant(data: NewRestaurantFormSchemaType) {
   try {
     const session = await auth();
@@ -84,6 +104,9 @@ export async function editRestaurantById({
     await db.restaurant.update({
       where: {
         id,
+        createdBy: {
+          id: session.user.id,
+        },
       },
       data,
     });
@@ -103,6 +126,9 @@ export async function deleteRestaurantById(id: string) {
     await db.restaurant.delete({
       where: {
         id,
+        createdBy: {
+          id: session.user.id,
+        },
       },
     });
   } catch (err) {
