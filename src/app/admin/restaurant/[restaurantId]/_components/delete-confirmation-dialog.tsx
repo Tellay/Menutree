@@ -1,6 +1,7 @@
 "use client";
 
 import { FaTrash as Trash } from "react-icons/fa";
+import { AiOutlineLoading3Quarters as Loading } from "react-icons/ai";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -118,10 +119,16 @@ export function DeleteConfirmationDialog({
             />
 
             <div className="flex flex-1 justify-between">
-              <DialogClose asChild>
+              <DialogClose disabled={form.formState.isSubmitting} asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
-              <Button type="submit">Delete</Button>
+
+              <Button disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting && (
+                  <Loading className="mr-2 size-4 animate-spin" />
+                )}
+                Delete
+              </Button>
             </div>
           </form>
         </Form>

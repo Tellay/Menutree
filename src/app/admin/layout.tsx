@@ -5,16 +5,13 @@ import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 
 import { Sidebar } from "./_components/sidebar";
+import { getRestraurantsCreatedByCurrentUser } from "@/actions";
 
 export default async function AdminLayout({ children }: PropsWithChildren) {
   const session = await auth();
   if (!session) return redirect("/");
 
-  const userRestaurants = await db.restaurant.findMany({
-    where: {
-      createdById: session!.user?.id,
-    },
-  });
+  const userRestaurants = await getRestraurantsCreatedByCurrentUser();
 
   return (
     <div className="flex h-screen flex-col">

@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+// TODO - Check the names is diffrente that Null, Undefined, 404
 export const formSchema = z.object({
   name: z
     .string()
@@ -109,7 +110,12 @@ export function NewRestaurantDialog() {
 
             <div className="flex flex-1 justify-between">
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button
+                  disabled={form.formState.isSubmitting}
+                  variant="outline"
+                >
+                  Cancel
+                </Button>
               </DialogClose>
 
               <Button disabled={form.formState.isSubmitting}>
