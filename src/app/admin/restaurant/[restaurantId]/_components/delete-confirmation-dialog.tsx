@@ -69,10 +69,7 @@ export function DeleteConfirmationDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Trash className="size-4" />
-          <span className="sr-only">Delete restaurant</span>
-        </Button>
+        <Button variant="destructive">Delete</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

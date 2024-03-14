@@ -15,7 +15,7 @@ export default async function AdminLayout({ children }: PropsWithChildren) {
 
   return (
     <div className="flex h-screen flex-col">
-      <div className="grid h-full grid-cols-[324px_auto]">
+      <div className="flex flex-1 gap-6 p-6">
         <Sidebar restaurants={userRestaurants} />
         {children}
       </div>

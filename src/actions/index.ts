@@ -41,8 +41,8 @@ export async function newRestaurant(data: NewRestaurantFormSchemaType) {
       },
     });
 
-    if (totalRestaurants + 1 > 10) {
-      throw new Error("You can only have up to 10 restaurants");
+    if (totalRestaurants + 1 > 9) {
+      throw new Error("You can only have up to 9 restaurants");
     }
 
     var restaurant = await db.restaurant.create({

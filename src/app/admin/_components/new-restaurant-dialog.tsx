@@ -28,6 +28,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 // TODO - Check the names is diffrente that Null, Undefined, 404
 export const formSchema = z.object({
@@ -101,7 +102,11 @@ export function NewRestaurantDialog() {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input disabled={form.formState.isSubmitting} {...field} />
+                    <Textarea
+                      className="h-[138px]"
+                      disabled={form.formState.isSubmitting}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
