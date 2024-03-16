@@ -49,7 +49,7 @@ export async function AddMealsCard({ restaurant }: IAddMealsCardProps) {
             )}
             {meals.map((meal) => (
               <div className="rounded-md border p-3" key={meal.id}>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div className="flex items-center space-x-2">
                     <div className="flex w-full justify-between">
                       <div className="flex items-center space-x-2">
@@ -62,7 +62,11 @@ export async function AddMealsCard({ restaurant }: IAddMealsCardProps) {
                         </Badge>
                       </div>
 
-                      <Button variant="secondary" size="sm">
+                      <Button
+                        className="size-8"
+                        variant="secondary"
+                        size="icon"
+                      >
                         <Edit className="size-4" />
                       </Button>
                     </div>
