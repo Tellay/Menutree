@@ -4,54 +4,79 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Restaurant } from "@prisma/client";
-
-import { editRestaurantById } from "@/actions";
-
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import {
   FaInstagram as Instagram,
   FaFacebook as Facebook,
   FaTiktok as TikTok,
 } from "react-icons/fa";
+import { AiOutlineLoading3Quarters as Loading } from "react-icons/ai";
+
+import { Restaurant } from "@prisma/client";
+
+import { editRestaurantById } from "@/actions";
+
+import {
+  InformationCard,
+  InformationCardDescription,
+  InformationCardFooter,
+  InformationCardFooterText,
+  InformationCardHeader,
+  InformationCardTitle,
+} from "./information-card";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormControl,
+  FormMessage,
+  FormLabel,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 interface RestaurantFormProps {
   restaurant: Restaurant;
 }
 
 const formSchema = z.object({
-  name: z.string().min(1, "Name is required!").max(50, "Name is too long!"),
+  name: z
+    .string()
+    .min(1, "Please provide a name for your restaurant!")
+    .max(50, "The name you provided is too long!"),
   description: z
     .string()
-    .min(1, "Description is required!")
-    .max(255, "Description is too long!"),
-  instagramUrl: z.string().optional(),
-  facebookUrl: z.string().optional(),
-  tiktokUrl: z.string().optional(),
+    .min(1, "Plese provide a description for your restaurant!")
+    .max(255, "The description you provided is too long!"),
+  instagramUrl: z
+    .string()
+    .max(40, "The username you provided is too long!")
+    .optional(),
+  facebookUrl: z
+    .string()
+    .max(40, "The username you provided is too long!")
+    .optional(),
+  tiktokUrl: z
+    .string()
+    .max(40, "The  username you provided is too long!")
+    .optional(),
 });
 
 export type RestaurantFormSchemaType = z.infer<typeof formSchema>;
 
 export function RestaurantForm({ restaurant }: RestaurantFormProps) {
+  const { name, description, instagramUrl, facebookUrl, tiktokUrl } =
+    restaurant;
+
   const form = useForm<RestaurantFormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: restaurant.name,
-      description: restaurant.description,
-      instagramUrl: restaurant.instagramUrl || "",
-      facebookUrl: restaurant.facebookUrl || "",
-      tiktokUrl: restaurant.tiktokUrl || "",
+      name,
+      description,
+      instagramUrl: instagramUrl || "",
+      facebookUrl: facebookUrl || "",
+      tiktokUrl: tiktokUrl || "",
     },
   });
 
@@ -70,100 +95,180 @@ export function RestaurantForm({ restaurant }: RestaurantFormProps) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit((data) => onSubmit(data))}
-          className="space-y-8"
+          className="space-y-6"
         >
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Spaghetti House" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <InformationCard>
+            <InformationCardHeader>
+              <InformationCardTitle>Avatar</InformationCardTitle>
+              <InformationCardDescription>
+                This is the avatar of your restaurant. Click on the avatar to
+                upload your restaurant avatar.
+              </InformationCardDescription>
+            </InformationCardHeader>
+            <InformationCardFooter>
+              <InformationCardFooterText>
+                Use your best photo.
+              </InformationCardFooterText>
+            </InformationCardFooter>
+          </InformationCard>
 
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea
-                    className="max-h-[80px]"
-                    placeholder="A very lovely restaurant with a great team."
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  This is your public display description.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <InformationCard>
+            <InformationCardHeader>
+              <InformationCardTitle>Name</InformationCardTitle>
+              <InformationCardDescription>
+                Enter the name of your restaurant.
+              </InformationCardDescription>
 
-          <div className="grid grid-cols-3 gap-2">
-            <FormField
-              control={form.control}
-              name="instagramUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex items-center gap-2">
-                    <Instagram className="size-5" />
-                    Instagram
-                  </FormLabel>
-                  <FormControl>
-                    <Input placeholder="spaghetti_house" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        disabled={form.formState.isSubmitting}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </InformationCardHeader>
+            <InformationCardFooter>
+              <InformationCardFooterText>
+                Please use 50 characters at maximum.
+              </InformationCardFooterText>
+            </InformationCardFooter>
+          </InformationCard>
 
-            <FormField
-              control={form.control}
-              name="facebookUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex items-center gap-2">
-                    <Facebook className="size-5" />
-                    Facebook
-                  </FormLabel>
-                  <FormControl>
-                    <Input placeholder="spaghetti_house" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <InformationCard>
+            <InformationCardHeader>
+              <InformationCardTitle>Description</InformationCardTitle>
+              <InformationCardDescription>
+                Enter the description of your restaurant.
+              </InformationCardDescription>
 
-            <FormField
-              control={form.control}
-              name="tiktokUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex items-center gap-2">
-                    <TikTok className="size-5" />
-                    TikTok
-                  </FormLabel>
-                  <FormControl>
-                    <Input placeholder="spaghetti_house" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        className="h-[80px]"
+                        disabled={form.formState.isSubmitting}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </InformationCardHeader>
+            <InformationCardFooter>
+              <InformationCardFooterText>
+                Please use 255 characters at maximum.
+              </InformationCardFooterText>
+            </InformationCardFooter>
+          </InformationCard>
 
-          <Button type="submit">Submit</Button>
+          <InformationCard>
+            <InformationCardHeader>
+              <InformationCardTitle>Social Medias</InformationCardTitle>
+              <InformationCardDescription>
+                Add your social medias links. This is where your customers can
+                follow you to stay updated.
+              </InformationCardDescription>
+
+              <div className="grid grid-cols-3 gap-3 rounded-md border bg-background p-4">
+                <FormField
+                  control={form.control}
+                  name="instagramUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label className="flex items-center gap-2 text-muted-foreground">
+                        <Instagram className="size-5" />
+                        Instagram
+                      </Label>
+                      <FormControl>
+                        <Input
+                          disabled={form.formState.isSubmitting}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="facebookUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label className="flex items-center gap-2 text-muted-foreground">
+                        <Facebook className="size-5" />
+                        Facebook
+                      </Label>
+                      <FormControl>
+                        <Input
+                          disabled={form.formState.isSubmitting}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="tiktokUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label className="flex items-center gap-2 text-muted-foreground">
+                        <TikTok className="size-5" />
+                        TikTok
+                      </Label>
+                      <FormControl>
+                        <Input
+                          disabled={form.formState.isSubmitting}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </InformationCardHeader>
+            <InformationCardFooter>
+              <InformationCardFooterText>
+                Social medias are optional but strongly recommended.
+              </InformationCardFooterText>
+            </InformationCardFooter>
+          </InformationCard>
+
+          <InformationCard>
+            <InformationCardHeader>
+              <InformationCardTitle>Save</InformationCardTitle>
+              <InformationCardDescription>
+                Save your changes to your restaurant.
+              </InformationCardDescription>
+            </InformationCardHeader>
+            <InformationCardFooter className="justify-between">
+              <InformationCardFooterText>
+                Make as many changes as you need.
+              </InformationCardFooterText>
+              <Button disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting && (
+                  <Loading className="mr-2 size-4 animate-spin" />
+                )}
+                Save
+              </Button>
+            </InformationCardFooter>
+          </InformationCard>
         </form>
       </Form>
     </div>

@@ -139,3 +139,108 @@ export async function deleteRestaurantById(id: string) {
   revalidatePath("/admin", "page");
   redirect("/admin");
 }
+
+export async function checkIfUserOwnsRestaurantById(id: string) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("User not found");
+
+    const restaurant = await db.restaurant.findUnique({
+      where: {
+        id,
+        createdBy: {
+          id: session.user.id,
+        },
+      },
+    });
+
+    if (!restaurant) {
+      throw new Error("User does not own this restaurant");
+    }
+
+    return restaurant;
+  } catch (error) {
+    console.error("Error checking if user owns restaurant", error);
+    return false;
+  }
+}
+
+export async function changeRestaurantNameById(id: string, newName: string) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("User not found");
+
+    const restaurant = await db.restaurant.update({
+      where: {
+        id,
+        createdBy: {
+          id: session.user.id,
+        },
+      },
+      data: {
+        name: newName,
+      },
+    });
+
+    return restaurant;
+  } catch (error) {
+    console.error("Error changing restaurant name", error);
+    throw error;
+  }
+}
+
+export async function getMealsByRestaurantId(id: string) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("User not found");
+
+    const meals = await db.meal.findMany({
+      where: {
+        restaurantId: id,
+      },
+    });
+
+    return meals;
+  } catch (error) {
+    console.error("Error getting meals", error);
+    throw error;
+  }
+}
+
+interface IAddMealToRestaurantProps {
+  restaurantId: string;
+  data: {
+    name: string;
+    description: string;
+    price: number;
+    published: boolean;
+  };
+}
+
+export async function addMealToRestaurantId({
+  restaurantId,
+  data,
+}: IAddMealToRestaurantProps) {
+  const { name, description, price, published } = data;
+
+  try {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("User not found");
+
+    const meal = await db.meal.create({
+      data: {
+        name,
+        description,
+        price,
+        published,
+        restaurantId,
+      },
+    });
+
+    revalidatePath("/admin/restaurant/[restaurantId]", "page");
+    return meal;
+  } catch (error) {
+    console.error("Error adding meal to restaurant", error);
+    throw error;
+  }
+}

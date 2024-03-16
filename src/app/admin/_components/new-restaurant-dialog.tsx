@@ -77,7 +77,7 @@ export function NewRestaurantDialog() {
       </DialogTrigger>
       <DialogContent className="w-[480px] sm:rounded-xl">
         <DialogHeader>
-          <DialogTitle>New restaurant</DialogTitle>
+          <DialogTitle>New Restaurant</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>

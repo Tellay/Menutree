@@ -1,6 +1,5 @@
 "use client";
 
-import { FaTrash as Trash } from "react-icons/fa";
 import { AiOutlineLoading3Quarters as Loading } from "react-icons/ai";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -71,9 +70,9 @@ export function DeleteConfirmationDialog({
       <DialogTrigger asChild>
         <Button variant="destructive">Delete</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="w-[480px]">
         <DialogHeader>
-          <DialogTitle>Delete restaurant</DialogTitle>
+          <DialogTitle>Delete Restaurant</DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete your
             restaurant from our servers.

@@ -1,17 +1,18 @@
-import { getRestaurantById } from "@/actions";
-import { RestaurantForm } from "./_components/restaurant-form";
-import { DeleteConfirmationDialog } from "./_components/delete-confirmation-dialog";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { MdError as Error } from "react-icons/md";
+
+import { checkIfUserOwnsRestaurantById } from "@/actions";
+
 import {
   InformationCard,
-  InformationCardDescription,
-  InformationCardFooter,
-  InformationCardFooterText,
   InformationCardHeader,
   InformationCardTitle,
+  InformationCardDescription,
+  InformationCardFooter,
 } from "./_components/information-card";
-import { Textarea } from "@/components/ui/textarea";
+import { DeleteConfirmationDialog } from "./_components/delete-confirmation-dialog";
+import { Separator } from "@/components/ui/separator";
+import { RestaurantForm } from "./_components/restaurant-form";
+import { AddMealsCard } from "./_components/add-meals-card";
 
 export default async function RestaurantPage({
   params,
@@ -20,9 +21,18 @@ export default async function RestaurantPage({
 }) {
   const { restaurantId } = params;
 
-  const restaurant = await getRestaurantById(restaurantId);
+  const restaurant = await checkIfUserOwnsRestaurantById(restaurantId);
   if (!restaurant) {
-    return <div>Restaurant not found</div>;
+    return (
+      <div className="mx-auto flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <Error className="size-6 text-destructive" />
+          <p className="text-sm text-destructive">
+            This restaurant doesn't exist or you don't own it!
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -30,86 +40,11 @@ export default async function RestaurantPage({
       <h1 className="text-3xl font-medium tracking-tight">{restaurant.name}</h1>
 
       <div className="grid gap-8">
-        <InformationCard>
-          <InformationCardHeader>
-            <InformationCardTitle>Avatar</InformationCardTitle>
-            <InformationCardDescription>
-              This is the avatar of your restaurant. Click on the avatar to
-              upload your restaurant avatar.
-            </InformationCardDescription>
-          </InformationCardHeader>
-          <InformationCardFooter>
-            <InformationCardFooterText>
-              Please use 50 characters at maximum.
-            </InformationCardFooterText>
-          </InformationCardFooter>
-        </InformationCard>
+        <RestaurantForm restaurant={restaurant} />
 
-        <InformationCard>
-          <InformationCardHeader>
-            <InformationCardTitle>Name</InformationCardTitle>
-            <InformationCardDescription>
-              Enter the name of your restaurant.
-            </InformationCardDescription>
+        <Separator className="my-6" orientation="horizontal" />
 
-            <Input className="w-[400px]" />
-          </InformationCardHeader>
-          <InformationCardFooter>
-            <InformationCardFooterText>
-              Please use 50 characters at maximum.
-            </InformationCardFooterText>
-          </InformationCardFooter>
-        </InformationCard>
-
-        <InformationCard>
-          <InformationCardHeader>
-            <InformationCardTitle>Description</InformationCardTitle>
-            <InformationCardDescription>
-              Enter the description of your restaurant.
-            </InformationCardDescription>
-
-            <Textarea className="h-[138px] w-[400px]" />
-          </InformationCardHeader>
-          <InformationCardFooter>
-            <InformationCardFooterText>
-              Please use 255 characters at maximum.
-            </InformationCardFooterText>
-          </InformationCardFooter>
-        </InformationCard>
-
-        <InformationCard>
-          <InformationCardHeader>
-            <InformationCardTitle>Social Medias</InformationCardTitle>
-            <InformationCardDescription>
-              <InformationCardDescription>
-                Add your social medias links. This is where your customers can
-                follow you to stay updated.
-              </InformationCardDescription>
-            </InformationCardDescription>
-          </InformationCardHeader>
-          <InformationCardFooter>
-            <InformationCardFooterText>
-              Social medias are optional but strongly recommended.
-            </InformationCardFooterText>
-          </InformationCardFooter>
-        </InformationCard>
-
-        <InformationCard>
-          <InformationCardHeader>
-            <InformationCardTitle>Add your meals</InformationCardTitle>
-            <InformationCardDescription>
-              <InformationCardDescription>
-                Add your meals, use the best images to make your menu look
-                amazing.
-              </InformationCardDescription>
-            </InformationCardDescription>
-          </InformationCardHeader>
-          <InformationCardFooter>
-            <InformationCardFooterText>
-              Do the best you can to make your menu look amazing.
-            </InformationCardFooterText>
-          </InformationCardFooter>
-        </InformationCard>
+        <AddMealsCard restaurant={restaurant} />
 
         <InformationCard className="border-destructive">
           <InformationCardHeader>

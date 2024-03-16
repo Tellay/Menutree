@@ -2,7 +2,6 @@ import { PropsWithChildren } from "react";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/server/auth";
-import { db } from "@/server/db";
 
 import { Sidebar } from "./_components/sidebar";
 import { getRestraurantsCreatedByCurrentUser } from "@/actions";
