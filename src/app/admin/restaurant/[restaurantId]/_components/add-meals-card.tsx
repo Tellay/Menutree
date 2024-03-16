@@ -1,5 +1,3 @@
-import { GrEdit as Edit } from "react-icons/gr";
-
 import { Restaurant } from "@prisma/client";
 
 import { getMealsByRestaurantId } from "@/actions";
@@ -12,10 +10,10 @@ import {
   InformationCardHeader,
   InformationCardTitle,
 } from "./information-card";
-
+import { EditMealDialog } from "./edit-meal-dialog";
 import { AddMealForm } from "./add-meal-form";
+
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 interface IAddMealsCardProps {
   restaurant: Restaurant;
@@ -62,13 +60,7 @@ export async function AddMealsCard({ restaurant }: IAddMealsCardProps) {
                         </Badge>
                       </div>
 
-                      <Button
-                        className="size-8"
-                        variant="secondary"
-                        size="icon"
-                      >
-                        <Edit className="size-4" />
-                      </Button>
+                      <EditMealDialog meal={meal} />
                     </div>
                   </div>
                   <p className="text-sm text-muted-foreground">

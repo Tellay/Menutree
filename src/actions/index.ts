@@ -244,3 +244,48 @@ export async function addMealToRestaurantId({
     throw error;
   }
 }
+
+interface IEditMealProps {
+  mealId: string;
+  data: {
+    name: string;
+    description: string;
+    price: number;
+    published: boolean;
+  };
+}
+
+export async function editMealById({ mealId, data }: IEditMealProps) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("User not found");
+
+    await db.meal.update({
+      where: {
+        id: mealId,
+      },
+      data,
+    });
+
+    revalidatePath("/admin/restaurant/[restaurantId]", "page");
+  } catch (error) {
+    console.error("Error editing meal", error);
+    throw error;
+  }
+}
+
+export async function deleteMealById(id: string) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) throw new Error("User not found");
+
+    await db.meal.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (err) {
+    console.error("Error deleting meal", err);
+    throw err;
+  }
+}
