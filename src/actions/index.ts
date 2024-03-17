@@ -66,9 +66,6 @@ export async function newRestaurant(data: NewRestaurantFormSchemaType) {
 
 export async function getRestaurantById(id: string) {
   try {
-    const session = await auth();
-    if (!session?.user?.id) throw new Error("User not found");
-
     const restaurant = await db.restaurant.findUnique({
       where: {
         id,
