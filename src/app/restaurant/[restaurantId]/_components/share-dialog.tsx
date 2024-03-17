@@ -33,10 +33,10 @@ export function ShareDialog({ restaurant }: IShareDialogProps) {
       <DialogContent className="w-fit border-none bg-transparent">
         <div className="space-y-6">
           <h4 className="text-center text-xl font-semibold tracking-tight">
-            Sharing {name}
+            Sharing {name}dasdasdasdasdas
           </h4>
 
-          <div className="rounded-md bg-white p-2">
+          <div className="mx-auto w-fit rounded-md bg-white p-2">
             <QRCodeSVG
               size={200}
               value={`${process.env.NEXT_PUBLIC_URL}/restaurant/${id}`}
