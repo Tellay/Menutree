@@ -14,7 +14,6 @@ import { formatNumber } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { ShareDialog } from "./_components/share-dialog";
-import { toast } from "sonner";
 
 export default async function RestaurantPage({
   params,
