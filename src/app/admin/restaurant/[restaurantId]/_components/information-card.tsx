@@ -63,7 +63,7 @@ export const InformationCardFooter = React.forwardRef<
     <footer
       ref={ref}
       className={cn(
-        "flex h-16 items-center bg-background px-6 py-3",
+        "flex h-16 items-center border-t bg-background px-6 py-3",
         className,
       )}
       {...props}

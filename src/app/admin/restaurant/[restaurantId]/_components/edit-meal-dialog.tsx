@@ -160,7 +160,7 @@ export function EditMealDialog({ meal }: IEditMealDialogProps) {
                 name="published"
                 render={({ field }) => (
                   <FormItem className="flex justify-between">
-                    <div className="flex flex-col space-y-0.5">
+                    <div className="flex flex-col space-y-1">
                       <FormLabel className="text-sm text-primary">
                         Will the meal be published?
                       </FormLabel>
@@ -182,10 +182,10 @@ export function EditMealDialog({ meal }: IEditMealDialogProps) {
 
             <div className="space-y-4 rounded-md border border-destructive p-4">
               <div className="space-y-0.5">
-                <h4 className="text-base font-semibold">
+                <h4 className="text-sm font-semibold">
                   Want do delete this meal?
                 </h4>
-                <p className="text-xs">
+                <p className="text-xs text-muted-foreground">
                   This action cannot be undone. Proceed with caution.
                 </p>
               </div>

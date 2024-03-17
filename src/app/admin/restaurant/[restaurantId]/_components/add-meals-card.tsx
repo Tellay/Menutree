@@ -25,14 +25,14 @@ export async function AddMealsCard({ restaurant }: IAddMealsCardProps) {
   const meals = await getMealsByRestaurantId(id);
 
   return (
-    <InformationCard>
+    <InformationCard className="mt-6">
       <InformationCardHeader>
         <InformationCardTitle>Add Your Meals</InformationCardTitle>
         <InformationCardDescription>
           Add your meals, use the best images to make your menu look amazing.
         </InformationCardDescription>
 
-        <div className="rounded-md border bg-background p-4">
+        <div className="rounded-md border bg-background p-3">
           <div className="space-y-4">
             <div className="flex justify-end">
               <AddMealForm restaurant={restaurant} />

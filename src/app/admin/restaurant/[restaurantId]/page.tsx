@@ -42,10 +42,6 @@ export default async function RestaurantPage({
       <div className="grid gap-8">
         <RestaurantForm restaurant={restaurant} />
 
-        <Separator className="my-6" orientation="horizontal" />
-
-        <AddMealsCard restaurant={restaurant} />
-
         <InformationCard className="border-destructive">
           <InformationCardHeader>
             <InformationCardTitle>Delete Restaurant</InformationCardTitle>
@@ -59,6 +55,8 @@ export default async function RestaurantPage({
             <DeleteConfirmationDialog restaurant={restaurant} />
           </InformationCardFooter>
         </InformationCard>
+
+        <AddMealsCard restaurant={restaurant} />
       </div>
     </div>
   );

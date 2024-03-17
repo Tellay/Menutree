@@ -10,6 +10,7 @@ import {
   FaTiktok as TikTok,
 } from "react-icons/fa";
 import { AiOutlineLoading3Quarters as Loading } from "react-icons/ai";
+import { FaCloudUploadAlt as Upload } from "react-icons/fa";
 
 import { Restaurant } from "@prisma/client";
 
@@ -34,7 +35,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 
 interface RestaurantFormProps {
   restaurant: Restaurant;
@@ -104,6 +104,14 @@ export function RestaurantForm({ restaurant }: RestaurantFormProps) {
                 This is the avatar of your restaurant. Click on the avatar to
                 upload your restaurant avatar.
               </InformationCardDescription>
+              <div className="rounded-md bg-background p-3">
+                <div className="flex h-[98px] items-center justify-center rounded-md border border-dashed">
+                  <div className="flex space-x-2 text-muted-foreground">
+                    <Upload className="size-5" />
+                    <span className="text-sm font-medium">Upload Avatar</span>
+                  </div>
+                </div>
+              </div>
             </InformationCardHeader>
             <InformationCardFooter>
               <InformationCardFooterText>
@@ -187,10 +195,10 @@ export function RestaurantForm({ restaurant }: RestaurantFormProps) {
                   name="instagramUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <Label className="flex items-center gap-2 text-muted-foreground">
+                      <FormLabel className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Instagram className="size-5" />
                         Instagram
-                      </Label>
+                      </FormLabel>
                       <FormControl>
                         <Input
                           disabled={form.formState.isSubmitting}
@@ -207,10 +215,10 @@ export function RestaurantForm({ restaurant }: RestaurantFormProps) {
                   name="facebookUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <Label className="flex items-center gap-2 text-muted-foreground">
+                      <FormLabel className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Facebook className="size-5" />
                         Facebook
-                      </Label>
+                      </FormLabel>
                       <FormControl>
                         <Input
                           disabled={form.formState.isSubmitting}
@@ -227,10 +235,10 @@ export function RestaurantForm({ restaurant }: RestaurantFormProps) {
                   name="tiktokUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <Label className="flex items-center gap-2 text-muted-foreground">
+                      <FormLabel className="flex items-center gap-2 text-sm text-muted-foreground">
                         <TikTok className="size-5" />
                         TikTok
-                      </Label>
+                      </FormLabel>
                       <FormControl>
                         <Input
                           disabled={form.formState.isSubmitting}
@@ -245,7 +253,7 @@ export function RestaurantForm({ restaurant }: RestaurantFormProps) {
             </InformationCardHeader>
             <InformationCardFooter>
               <InformationCardFooterText>
-                Social medias are optional but strongly recommended.
+                Please use the just the username.
               </InformationCardFooterText>
             </InformationCardFooter>
           </InformationCard>

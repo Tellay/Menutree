@@ -73,6 +73,13 @@ export async function getRestaurantById(id: string) {
       where: {
         id,
       },
+      include: {
+        meals: {
+          where: {
+            published: true,
+          },
+        },
+      },
     });
 
     return restaurant;
@@ -101,6 +108,8 @@ export async function editRestaurantById({
     const session = await auth();
     if (!session?.user?.id) throw new Error("User not found");
 
+    const { name, description, instagramUrl, facebookUrl, tiktokUrl } = data;
+
     await db.restaurant.update({
       where: {
         id,
@@ -108,7 +117,13 @@ export async function editRestaurantById({
           id: session.user.id,
         },
       },
-      data,
+      data: {
+        name,
+        description,
+        instagramUrl: instagramUrl !== "" ? instagramUrl : null,
+        facebookUrl: facebookUrl !== "" ? facebookUrl : null,
+        tiktokUrl: tiktokUrl !== "" ? tiktokUrl : null,
+      },
     });
 
     revalidatePath("/admin/restaurant/[restaurantId]", "page");
@@ -286,6 +301,24 @@ export async function deleteMealById(id: string) {
     });
   } catch (err) {
     console.error("Error deleting meal", err);
+    throw err;
+  }
+}
+
+export async function addVisitById(id: string) {
+  try {
+    await db.restaurant.update({
+      where: {
+        id,
+      },
+      data: {
+        totalVisits: {
+          increment: 1,
+        },
+      },
+    });
+  } catch (err) {
+    console.error("Error adding visit", err);
     throw err;
   }
 }

@@ -155,8 +155,8 @@ export function AddMealForm({ restaurant }: IAddMealFormProps) {
                 name="published"
                 render={({ field }) => (
                   <FormItem className="flex justify-between">
-                    <div className="flex flex-col space-y-0.5">
-                      <FormLabel className="text-primary">
+                    <div className="flex flex-col space-y-1">
+                      <FormLabel className="text-sm text-primary">
                         Will the meal be published?
                       </FormLabel>
                       <p className="text-xs text-muted-foreground">
