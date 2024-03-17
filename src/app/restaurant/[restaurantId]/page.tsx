@@ -126,7 +126,7 @@ export default async function RestaurantPage({
             {meals.length === 0 && (
               <div className="col-span-1 md:col-span-2 lg:col-span-3">
                 <p className="text-center text-sm text-muted-foreground">
-                  The restaurant doesn't have any meals yet...
+                  This restaurant doesn't have any meals yet...
                 </p>
               </div>
             )}
