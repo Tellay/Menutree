@@ -1,7 +1,9 @@
 "use client";
 
-import { UploadButton } from "@/lib/utils";
+import { toast } from "sonner";
+import { UseFormReturn } from "react-hook-form";
 
+import { UploadButton } from "@/lib/utils";
 import {
   InformationCard,
   InformationCardHeader,
@@ -11,9 +13,13 @@ import {
   InformationCardFooterText,
 } from "./information-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { toast } from "sonner";
+import { RestaurantFormSchemaType } from "./restaurant-form";
 
-export function AvatarUpload() {
+interface AvatarUploadProps {
+  form: UseFormReturn<RestaurantFormSchemaType>;
+}
+
+export function AvatarUpload({ form }: AvatarUploadProps) {
   return (
     <InformationCard>
       <InformationCardHeader>
@@ -35,7 +41,7 @@ export function AvatarUpload() {
           className="h-[98px] rounded-md border border-dashed bg-background p-3 text-sm text-muted-foreground"
           endpoint="imageUploader"
           onClientUploadComplete={(res) => {
-            // form.setValue("avatarUrl", res[0].url);
+            form.setValue("avatarUrl", res[0].url);
           }}
           onUploadError={(error: Error) => {
             toast.error("Failed to upload avatar");

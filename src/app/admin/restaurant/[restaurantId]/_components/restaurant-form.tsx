@@ -101,7 +101,7 @@ export function RestaurantForm({ restaurant }: RestaurantFormProps) {
           onSubmit={form.handleSubmit((data) => onSubmit(data))}
           className="space-y-6"
         >
-          <AvatarUpload />
+          <AvatarUpload form={form} />
 
           <InformationCard>
             <InformationCardHeader>
