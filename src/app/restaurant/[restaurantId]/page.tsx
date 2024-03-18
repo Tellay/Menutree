@@ -14,6 +14,10 @@ import { formatNumber } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { ShareDialog } from "./_components/share-dialog";
+import Image from "next/image";
+import { Avatar } from "@/components/ui/avatar";
+import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { RestaurantAvatar } from "./_components/restaurant-avatar";
 
 export default async function RestaurantPage({
   params,
@@ -58,6 +62,7 @@ export default async function RestaurantPage({
     facebookUrl,
     tiktokUrl,
     meals,
+    avatarUrl,
   } = restaurant;
 
   await addVisitById(id);
@@ -66,52 +71,61 @@ export default async function RestaurantPage({
     <div>
       <div className="container space-y-12 py-12">
         <div className="flex flex-col space-y-4">
-          <h1 className="text-4xl font-medium tracking-tight">{name}</h1>
+          <div className="flex items-center justify-between">
+            <div className="space-y-4">
+              <h1 className="text-4xl font-medium tracking-tight">{name}</h1>
 
-          <div className="flex h-[56px] items-center space-x-4">
-            <div className="flex flex-col items-center space-y-0.5">
-              <h4 className="font-medium">
-                {formatNumber({ number: totalVisits, notation: "compact" })}
-              </h4>
-              <p className="text-muted-foreground">Total visits</p>
+              <div className="flex h-[56px] items-center space-x-4">
+                <div className="flex flex-col items-center space-y-0.5">
+                  <h4 className="font-medium">
+                    {formatNumber({ number: totalVisits, notation: "compact" })}
+                  </h4>
+                  <p className="text-muted-foreground">Total visits</p>
+                </div>
+
+                <Separator orientation="vertical" />
+
+                <div className="flex items-center space-x-3">
+                  {instagramUrl && (
+                    <Link
+                      className="transition-colors hover:text-foreground/90"
+                      href={`https://www.instagram.com/${instagramUrl}`}
+                      target="_blank"
+                    >
+                      <Instagram className="size-6" />
+                    </Link>
+                  )}
+
+                  {facebookUrl && (
+                    <Link
+                      className="transition-colors hover:text-foreground/90"
+                      href={`https://www.facebook.com/${facebookUrl}`}
+                      target="_blank"
+                    >
+                      <Facebook className="size-6" />
+                    </Link>
+                  )}
+
+                  {tiktokUrl && (
+                    <Link
+                      className="transition-colors hover:text-foreground/90"
+                      href={`https://www.tiktok.com/@${tiktokUrl}`}
+                      target="_blank"
+                    >
+                      <TikTok className="size-6" />
+                    </Link>
+                  )}
+                </div>
+              </div>
+
+              <p className="text-muted-foreground">{description}</p>
             </div>
 
-            <Separator orientation="vertical" />
-
-            <div className="flex items-center space-x-3">
-              {instagramUrl && (
-                <Link
-                  className="transition-colors hover:text-foreground/90"
-                  href={`https://www.instagram.com/${instagramUrl}`}
-                  target="_blank"
-                >
-                  <Instagram className="size-6" />
-                </Link>
-              )}
-
-              {facebookUrl && (
-                <Link
-                  className="transition-colors hover:text-foreground/90"
-                  href={`https://www.facebook.com/${facebookUrl}`}
-                  target="_blank"
-                >
-                  <Facebook className="size-6" />
-                </Link>
-              )}
-
-              {tiktokUrl && (
-                <Link
-                  className="transition-colors hover:text-foreground/90"
-                  href={`https://www.tiktok.com/@${tiktokUrl}`}
-                  target="_blank"
-                >
-                  <TikTok className="size-6" />
-                </Link>
-              )}
-            </div>
+            <RestaurantAvatar
+              className={`${!avatarUrl ? "hidden" : "block"}`}
+              img={avatarUrl || ""}
+            />
           </div>
-
-          <p className="text-muted-foreground">{description}</p>
 
           <div className="space-x-2 border-t py-4">
             <ShareDialog restaurant={restaurant} />
@@ -131,9 +145,23 @@ export default async function RestaurantPage({
             )}
             {meals.map((meal) => (
               <div className="space-y-3 rounded-md" key={meal.id}>
-                <div className="aspect-video animate-pulse rounded-md bg-secondary" />
+                <div className="relative aspect-video overflow-hidden rounded-md bg-muted">
+                  {!meal.avatarUrl ? (
+                    <div className="flex h-full items-center justify-center text-muted-foreground">
+                      No photo
+                    </div>
+                  ) : (
+                    <Image
+                      className="object-cover"
+                      src={meal.avatarUrl || ""}
+                      alt={`${meal.name} photo`}
+                      fill
+                    />
+                  )}
+                </div>
+                {/* <div className="aspect-video animate-pulse rounded-md bg-secondary" /> */}
 
-                <div className="flex flex-col justify-between">
+                <div className="flex flex-col justify-between space-y-2">
                   <div className="flex items-center justify-between">
                     <h5 className="font-medium">{meal.name}</h5>
                     <span className="text-sm font-medium">
@@ -144,6 +172,9 @@ export default async function RestaurantPage({
                       €
                     </span>
                   </div>
+                  <p className="line-clamp-3 text-sm text-muted-foreground">
+                    {meal.description}
+                  </p>
                 </div>
               </div>
             ))}

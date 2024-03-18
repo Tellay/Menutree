@@ -113,7 +113,7 @@ export function RestaurantForm({ restaurant }: RestaurantFormProps) {
 
                 <Avatar className="size-[78px]">
                   <AvatarImage src={form.watch("avatarUrl")} />
-                  <AvatarFallback />
+                  <AvatarFallback className="bg-background" />
                 </Avatar>
               </div>
               <UploadButton

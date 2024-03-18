@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { GrEdit as Edit } from "react-icons/gr";
 import { AiOutlineLoading3Quarters as Loading } from "react-icons/ai";
+import { IoMdCloudUpload as Upload } from "react-icons/io";
 
 import { Meal } from "@prisma/client";
 
@@ -33,7 +35,8 @@ import { Switch } from "@/components/ui/switch";
 import { editMealById } from "@/actions";
 
 import { DeleteMealDialog } from "./delete-meal-dialog";
-import { AvatarUpload } from "./avatar-upload";
+import { UploadButton } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 const formSchema = z.object({
   name: z
@@ -60,7 +63,7 @@ interface IEditMealDialogProps {
 export function EditMealDialog({ meal }: IEditMealDialogProps) {
   const [open, setIsOpen] = useState(false);
 
-  const { id, name, description, price, published } = meal;
+  const { id, name, description, price, published, avatarUrl } = meal;
 
   const form = useForm<EditMealFormSchemaType>({
     resolver: zodResolver(formSchema),
@@ -69,7 +72,7 @@ export function EditMealDialog({ meal }: IEditMealDialogProps) {
       description,
       price: price,
       published: published,
-      avatarUrl: "",
+      avatarUrl: avatarUrl || "",
     },
   });
 
@@ -89,6 +92,8 @@ export function EditMealDialog({ meal }: IEditMealDialogProps) {
     }
   }
 
+  const imgPreview = form.watch("avatarUrl");
+
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -96,7 +101,7 @@ export function EditMealDialog({ meal }: IEditMealDialogProps) {
           <Edit className="size-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="h-[500px] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit Meal</DialogTitle>
         </DialogHeader>
@@ -105,7 +110,33 @@ export function EditMealDialog({ meal }: IEditMealDialogProps) {
             onSubmit={form.handleSubmit((data) => onSubmit(data))}
             className="space-y-6"
           >
-            <AvatarUpload form={form} />
+            {!imgPreview ? (
+              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                <Upload className="size-5" />
+                Upload a photo to see preview
+              </div>
+            ) : (
+              <div className="relative h-[230px] overflow-hidden rounded-md bg-muted">
+                <Image
+                  className="object-cover"
+                  src={imgPreview}
+                  alt="Image preview"
+                  fill
+                />
+              </div>
+            )}
+
+            <UploadButton
+              className="h-[98px] rounded-md border border-dashed bg-background p-3 text-sm text-muted-foreground"
+              endpoint="imageUploader"
+              onClientUploadComplete={(res) => {
+                form.setValue("avatarUrl", res[0].url);
+              }}
+              onUploadError={(error: Error) => {
+                toast.error("Failed to upload avatar");
+              }}
+            />
+            {/* <AvatarUpload form={form} /> */}
 
             <FormField
               control={form.control}

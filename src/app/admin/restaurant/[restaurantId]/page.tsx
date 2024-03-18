@@ -1,4 +1,5 @@
 import { MdError as Error } from "react-icons/md";
+import { LuExternalLink as ExternalLink } from "react-icons/lu";
 
 import { checkIfUserOwnsRestaurantById } from "@/actions";
 
@@ -13,6 +14,7 @@ import { DeleteConfirmationDialog } from "./_components/delete-confirmation-dial
 import { Separator } from "@/components/ui/separator";
 import { RestaurantForm } from "./_components/restaurant-form";
 import { AddMealsCard } from "./_components/add-meals-card";
+import Link from "next/link";
 
 export default async function RestaurantPage({
   params,
@@ -37,7 +39,19 @@ export default async function RestaurantPage({
 
   return (
     <div className="mx-auto w-[912px] space-y-10 p-6">
-      <h1 className="text-3xl font-medium tracking-tight">{restaurant.name}</h1>
+      <div className="space-y-2">
+        <h1 className="text-3xl font-medium tracking-tight">
+          {restaurant.name}
+        </h1>
+        <Link
+          className="flex items-center gap-2 text-sm text-muted-foreground"
+          href={`${process.env.NEXT_PUBLIC_URL}/restaurant/${restaurantId}`}
+          target="_blank"
+        >
+          <ExternalLink className="size-4" />
+          Vist restaurant page
+        </Link>
+      </div>
 
       <div className="grid gap-8">
         <RestaurantForm restaurant={restaurant} />
