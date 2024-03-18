@@ -127,7 +127,7 @@ export function EditMealDialog({ meal }: IEditMealDialogProps) {
             )}
 
             <UploadButton
-              className="h-[98px] rounded-md border border-dashed bg-background p-3 text-sm text-muted-foreground"
+              className="h-[98px] rounded-md border border-dashed bg-background p-3 text-xs text-muted-foreground"
               endpoint="imageUploader"
               onClientUploadComplete={(res) => {
                 form.setValue("avatarUrl", res[0].url);

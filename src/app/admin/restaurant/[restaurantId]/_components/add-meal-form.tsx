@@ -71,7 +71,7 @@ export function AddMealForm({ restaurant }: IAddMealFormProps) {
         data: values,
       });
 
-      toast.success("Meal add successfully");
+      toast.success("Meal added successfully");
     } catch (error) {
       toast.error("Failed to add meal");
     } finally {

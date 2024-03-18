@@ -44,7 +44,7 @@ export default async function RestaurantPage({
           {restaurant.name}
         </h1>
         <Link
-          className="flex items-center gap-2 text-sm text-muted-foreground"
+          className="flex items-center gap-2 text-sm text-muted-foreground hover:underline"
           href={`${process.env.NEXT_PUBLIC_URL}/restaurant/${restaurantId}`}
           target="_blank"
         >

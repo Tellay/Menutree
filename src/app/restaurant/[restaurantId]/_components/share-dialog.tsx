@@ -30,7 +30,7 @@ export function ShareDialog({ restaurant }: IShareDialogProps) {
           Share
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-fit">
+      <DialogContent className="w-fit rounded-lg">
         <div className="space-y-6">
           <h4 className="text-center text-xl font-semibold tracking-tight">
             Sharing {name}

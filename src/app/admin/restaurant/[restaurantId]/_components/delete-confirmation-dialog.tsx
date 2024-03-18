@@ -27,6 +27,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 interface IDeleteConfirmationDialogProps {
   restaurant: Restaurant;
@@ -62,7 +63,12 @@ export function DeleteConfirmationDialog({
   });
 
   async function onSubmit() {
-    await deleteRestaurantById(restaurant.id);
+    try {
+      await deleteRestaurantById(restaurant.id);
+      toast.success("Restaurant deleted successfully");
+    } catch (err) {
+      toast.error("Failed to delete restaurant");
+    }
   }
 
   return (

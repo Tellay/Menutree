@@ -16,7 +16,7 @@ export function formatNumber({
   notation = "standard",
 }: {
   number: number;
-  notation: "standard" | "compact";
+  notation?: "standard" | "compact";
 }) {
   return Intl.NumberFormat("en-US", { notation }).format(number);
 }
