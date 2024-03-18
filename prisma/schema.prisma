@@ -57,7 +57,7 @@ model Restaurant {
   id            String   @id @default(cuid())
   name          String
   description   String   @db.VarChar(255)
-  avatarUrl         String?
+  avatarUrl     String?
   rating        Float    @default(0)
   totalReviews  Int      @default(0)
   totalVisits   Int      @default(0)
@@ -77,7 +77,7 @@ model Meal {
   name         String
   description  String     @db.VarChar(255)
   price        Float
-  image        String?
+  avatarUrl    String?
   rating       Float      @default(0)
   totalReviews Int        @default(0)
   published    Boolean    @default(false)

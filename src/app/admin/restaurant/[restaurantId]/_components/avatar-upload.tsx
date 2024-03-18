@@ -14,9 +14,10 @@ import {
 } from "./information-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RestaurantFormSchemaType } from "./restaurant-form";
+import { EditMealFormSchemaType } from "./edit-meal-dialog";
 
 interface AvatarUploadProps {
-  form: UseFormReturn<RestaurantFormSchemaType>;
+  form: UseFormReturn<RestaurantFormSchemaType | EditMealFormSchemaType>;
 }
 
 export function AvatarUpload({ form }: AvatarUploadProps) {
@@ -33,7 +34,7 @@ export function AvatarUpload({ form }: AvatarUploadProps) {
           </div>
 
           <Avatar className="size-[78px]">
-            <AvatarImage />
+            <AvatarImage src={form.watch("avatarUrl")} />
             <AvatarFallback />
           </Avatar>
         </div>

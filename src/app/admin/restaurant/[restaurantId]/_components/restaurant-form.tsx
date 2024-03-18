@@ -10,7 +10,6 @@ import {
   FaTiktok as TikTok,
 } from "react-icons/fa";
 import { AiOutlineLoading3Quarters as Loading } from "react-icons/ai";
-import { FaCloudUploadAlt as Upload } from "react-icons/fa";
 
 import { Restaurant } from "@prisma/client";
 

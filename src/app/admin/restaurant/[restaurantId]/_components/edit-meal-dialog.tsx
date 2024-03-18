@@ -33,6 +33,7 @@ import { Switch } from "@/components/ui/switch";
 import { editMealById } from "@/actions";
 
 import { DeleteMealDialog } from "./delete-meal-dialog";
+import { AvatarUpload } from "./avatar-upload";
 
 const formSchema = z.object({
   name: z
@@ -47,6 +48,7 @@ const formSchema = z.object({
     .number({ required_error: "Please provide a price for your meal!" })
     .positive("Price must be a positive number!"),
   published: z.coerce.boolean(),
+  avatarUrl: z.string().optional(),
 });
 
 export type EditMealFormSchemaType = z.infer<typeof formSchema>;
@@ -67,6 +69,7 @@ export function EditMealDialog({ meal }: IEditMealDialogProps) {
       description,
       price: price,
       published: published,
+      avatarUrl: "",
     },
   });
 
@@ -102,6 +105,8 @@ export function EditMealDialog({ meal }: IEditMealDialogProps) {
             onSubmit={form.handleSubmit((data) => onSubmit(data))}
             className="space-y-6"
           >
+            <AvatarUpload form={form} />
+
             <FormField
               control={form.control}
               name="name"

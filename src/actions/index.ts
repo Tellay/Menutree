@@ -94,6 +94,7 @@ interface EditRestaurantByIdProps {
     instagramUrl?: string;
     facebookUrl?: string;
     tiktokUrl?: string;
+    avatarUrl?: string;
   };
 }
 
@@ -105,7 +106,14 @@ export async function editRestaurantById({
     const session = await auth();
     if (!session?.user?.id) throw new Error("User not found");
 
-    const { name, description, instagramUrl, facebookUrl, tiktokUrl } = data;
+    const {
+      name,
+      description,
+      instagramUrl,
+      facebookUrl,
+      tiktokUrl,
+      avatarUrl,
+    } = data;
 
     await db.restaurant.update({
       where: {
@@ -120,6 +128,7 @@ export async function editRestaurantById({
         instagramUrl: instagramUrl !== "" ? instagramUrl : null,
         facebookUrl: facebookUrl !== "" ? facebookUrl : null,
         tiktokUrl: tiktokUrl !== "" ? tiktokUrl : null,
+        avatarUrl: avatarUrl !== "" ? avatarUrl : null,
       },
     });
 
@@ -261,6 +270,7 @@ interface IEditMealProps {
   mealId: string;
   data: {
     name: string;
+    avatarUrl?: string;
     description: string;
     price: number;
     published: boolean;
