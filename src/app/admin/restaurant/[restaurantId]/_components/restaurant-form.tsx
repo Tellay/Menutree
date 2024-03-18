@@ -36,6 +36,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { UploadButton, UploadDropzone } from "@/lib/utils";
+import { AvatarUpload } from "./avatar-upload";
 
 interface RestaurantFormProps {
   restaurant: Restaurant;
@@ -100,38 +101,7 @@ export function RestaurantForm({ restaurant }: RestaurantFormProps) {
           onSubmit={form.handleSubmit((data) => onSubmit(data))}
           className="space-y-6"
         >
-          <InformationCard>
-            <InformationCardHeader>
-              <InformationCardTitle>Avatar</InformationCardTitle>
-              <InformationCardDescription>
-                This is the avatar of your restaurant. Click on the avatar to
-                upload your restaurant avatar.
-              </InformationCardDescription>
-              <UploadDropzone
-                endpoint="imageUploader"
-                onClientUploadComplete={(res) => {
-                  form.setValue("avatarUrl", res[0].url);
-                }}
-                onUploadError={(error: Error) => {
-                  alert("Error Uploading Restaurant Avatar! Try Again!");
-                }}
-                className="rounded-md bg-background p-3"
-              />
-              {/* <div className="rounded-md bg-background p-3">
-                <div className="flex h-[98px] items-center justify-center rounded-md border border-dashed">
-                  <div className="flex space-x-2 text-muted-foreground">
-                    <Upload className="size-5" />
-                    <span className="text-sm font-medium">Upload Avatar</span>
-                  </div>
-                </div>
-              </div> */}
-            </InformationCardHeader>
-            <InformationCardFooter>
-              <InformationCardFooterText>
-                Use your best photo.
-              </InformationCardFooterText>
-            </InformationCardFooter>
-          </InformationCard>
+          <AvatarUpload />
 
           <InformationCard>
             <InformationCardHeader>
