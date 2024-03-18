@@ -34,8 +34,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { UploadButton, UploadDropzone } from "@/lib/utils";
-import { AvatarUpload } from "./avatar-upload";
+import { UploadButton } from "@/lib/utils";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface RestaurantFormProps {
   restaurant: Restaurant;
@@ -100,7 +100,39 @@ export function RestaurantForm({ restaurant }: RestaurantFormProps) {
           onSubmit={form.handleSubmit((data) => onSubmit(data))}
           className="space-y-6"
         >
-          <AvatarUpload form={form} />
+          <InformationCard>
+            <InformationCardHeader>
+              <div className="flex justify-between">
+                <div className="flex flex-col">
+                  <InformationCardTitle>Avatar</InformationCardTitle>
+                  <InformationCardDescription>
+                    This is the avatar of your restaurant. Click on the avatar
+                    to upload your restaurant avatar.
+                  </InformationCardDescription>
+                </div>
+
+                <Avatar className="size-[78px]">
+                  <AvatarImage src={form.watch("avatarUrl")} />
+                  <AvatarFallback />
+                </Avatar>
+              </div>
+              <UploadButton
+                className="h-[98px] rounded-md border border-dashed bg-background p-3 text-sm text-muted-foreground"
+                endpoint="imageUploader"
+                onClientUploadComplete={(res) => {
+                  form.setValue("avatarUrl", res[0].url);
+                }}
+                onUploadError={(error: Error) => {
+                  toast.error("Failed to upload avatar");
+                }}
+              />
+            </InformationCardHeader>
+            <InformationCardFooter>
+              <InformationCardFooterText>
+                Use your best photo.
+              </InformationCardFooterText>
+            </InformationCardFooter>
+          </InformationCard>
 
           <InformationCard>
             <InformationCardHeader>
