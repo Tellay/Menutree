@@ -114,7 +114,7 @@ export default async function RestaurantPage({
                     {tiktokUrl && (
                       <Link
                         className="transition-colors hover:text-foreground/90"
-                        href={`https://www.tiktok.com/${tiktokUrl}`}
+                        href={`https://www.tiktok.com/@${tiktokUrl}`}
                         target="_blank"
                       >
                         <TikTok className="size-5" />
