@@ -33,7 +33,7 @@ export const BentoGridCard = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "rounded-lg border px-6 py-8 transition-all hover:shadow-md",
+        "space-y-3 rounded-lg border px-6 py-8 transition-all hover:shadow-md",
         className,
       )}
       {...props}
@@ -50,7 +50,10 @@ export const BentoGridCardTitle = React.forwardRef<
   return (
     <h3
       ref={ref}
-      className={cn("text-balance text-2xl font-semibold", className)}
+      className={cn(
+        "text-balance text-2xl font-semibold capitalize",
+        className,
+      )}
       {...props}
     >
       {children}
@@ -65,7 +68,7 @@ export const BentoGridCardDescription = React.forwardRef<
   return (
     <p
       ref={ref}
-      className={cn("text-balance text-muted-foreground", className)}
+      className={cn("text-pretty text-sm text-muted-foreground", className)}
       {...props}
     >
       {children}
