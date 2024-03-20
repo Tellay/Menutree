@@ -37,7 +37,7 @@ export default async function Home() {
 
           <Button variant="outline" asChild>
             {session ? (
-              <Link href="/admin">Go to Admin Page!</Link>
+              <Link href="/admin">Manage Restaurants!</Link>
             ) : (
               <Link href="/auth">Get started!</Link>
             )}
