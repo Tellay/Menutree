@@ -26,7 +26,7 @@ export async function User() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar className="size-8">
+        <Avatar className="size-8 border">
           <AvatarImage src={session?.user?.image || ""} />
           <AvatarFallback>
             {getFirstLetterOfName(session?.user?.name || "")}
