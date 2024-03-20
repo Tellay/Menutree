@@ -19,11 +19,11 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center">
+      <Header />
       <div className="container">
-        <Header />
         <div className="flex flex-col items-center justify-center space-y-4 py-24">
-          <div className="w-[980px] space-y-2 text-center">
-            <h1 className="hidden text-center text-3xl font-bold leading-tight tracking-tighter md:block md:text-5xl lg:leading-[1.1]">
+          <div className="max-w-[980px] space-y-2 text-center">
+            <h1 className="text-center text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1]">
               Your restaurant in one Link. Less papers, just a QRCode away.
             </h1>
 
@@ -35,7 +35,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <Button variant="default" asChild>
+          <Button variant="outline" asChild>
             {session ? (
               <Link href="/admin">Go to Admin Page!</Link>
             ) : (
@@ -84,7 +84,7 @@ export default async function Home() {
               </BentoGridCardDescription>
             </BentoGridCard>
 
-            <BentoGridCard className="relative row-span-2 overflow-hidden">
+            <BentoGridCard className="relative overflow-hidden lg:row-span-2">
               <BentoGridCardTitle>
                 Generate a QRCode For The Menu
               </BentoGridCardTitle>
@@ -92,11 +92,11 @@ export default async function Home() {
                 Streamline customer access to your menu with our QR code
                 generator. Enhance convenience, elevate customer experience, and
                 embrace the future of dining technology effortlessly.
-                <QRCode className="absolute -bottom-8 -right-4 size-[220px] -rotate-[6deg] text-primary" />
+                <QRCode className="absolute -bottom-8 -right-4 hidden size-[220px] -rotate-[6deg] text-primary lg:block" />
               </BentoGridCardDescription>
             </BentoGridCard>
 
-            <BentoGridCard className="relative col-span-2 overflow-hidden">
+            <BentoGridCard className="relative overflow-hidden lg:col-span-2">
               <BentoGridCardTitle>Privacy and Security</BentoGridCardTitle>
               <BentoGridCardDescription>
                 Privacy and security are essential components of data
@@ -105,7 +105,7 @@ export default async function Home() {
                 personal information. By prioritizing both aspects,
                 organizations can enhance data protection, comply with
                 regulations, and build trust with users effectively.
-                <Lock className="absolute -bottom-6 -right-2 size-[116px] -rotate-[6deg] text-primary" />
+                <Lock className="absolute -bottom-6 -right-2 hidden size-[116px] -rotate-[6deg] text-primary lg:block" />
               </BentoGridCardDescription>
             </BentoGridCard>
 

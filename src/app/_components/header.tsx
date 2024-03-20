@@ -12,14 +12,16 @@ export async function Header() {
 
   return (
     <div className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-14 max-w-screen-2xl items-center px-6">
+      <div className="container flex h-14 w-full max-w-screen-2xl items-center px-6">
         <div className="flex w-full items-center justify-between">
-          <div className="relative size-6">
-            <Image src="/menutree_nobg.svg" alt="Menutree logo" fill />
-          </div>
+          <Link href="/">
+            <div className="relative size-6">
+              <Image src="/menutree_nobg.svg" alt="Menutree logo" fill />
+            </div>
+          </Link>
 
           {!session?.user ? (
-            <Button className="gap-2" variant="outline" asChild>
+            <Button className="gap-2" variant="default" asChild>
               <Link href="/auth">
                 <UserPlus className="size-4" />
                 Sign In
