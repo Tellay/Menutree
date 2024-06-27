@@ -23,7 +23,6 @@ The main motivation behind Menutree is to save the Earth. We are using a lot of 
 - Add categories and items to the menu
 - Add images to the items
 - Generate a QRCode for the menu
-- Print the QRCode and place it on the tables
 - Customers can scan the QRCode and view the menu on their mobile phones
 
 # Security Policy
